@@ -110,7 +110,16 @@ angels = [
 
 # Special days and elements
 special_days = [(5, 31), (8, 12), (10, 24), (1, 5), (3, 19)]
-elements = ["Fire", "Water", "Air", "Earth", "Ether"]
+special_elements = ["Aether (Wood)", "Fire", "Air (Metal)", "Water", "Earth"]
+special_archangels = ["Nathaniel", "Michael", "Raphael", "Gabriel", "Uriel"]
+special_seasons = ["Spring", "Summer", "Autumn", "Winter", "Late Summer"]
+special_symbolisms = [
+    "Represents new beginnings, growth, and higher vibrations. Tied to the gall-bladder and liver meridians; aids in expanding consciousness and understanding limitless potential. Imbalance may cause complaining.",
+    "Inspires divine love, heart-opening, and overcoming depression. Tied to the heart and small intestine meridians; promotes spreading light and recognizing soul duality. Imbalance may cause depression.",
+    "Focuses on healing, wisdom, and interconnectedness. Tied to the lung and large intestine meridians; assists in studies, music, medicine, and repairing disharmony. Imbalance may lead to downfall.",
+    "Encourages intuition, flexibility, and freedom from fears. Tied to the bladder and kidney meridians; brings fertility, wisdom, and spiritual information. Imbalance may result in fear control.",
+    "Promotes balance, peace, and guidance from doubt. Tied to the stomach and spleen meridians; radiates light to show life's path and encourage serenity. Imbalance may cause anxiety."
+]
 
 # Element qualities
 element_qualities = {
@@ -254,7 +263,7 @@ zodiac_sign = get_zodiac_sign(longitude)
 special_message = ""
 if (month, day) in special_days:
     special_index = special_days.index((month, day))
-    special_message = f"\n\n{special_date_desc} {dt.strftime('%B %d')} is one of the special days linked to the five elements. You are associated with the element: {elements[special_index]} 🌟. People born on these days are said to embody genius qualities and can connect with any angel or elemental forces. ✨"
+    special_message = f"\n\n{special_date_desc} {dt.strftime('%B %d')} is one of the special days linked to the five elements, totaling 77 angels including the 72 and 5 archangels. You are associated with Archangel {special_archangels[special_index]} of {special_elements[special_index]}, linked to {special_seasons[special_index]}. {special_symbolisms[special_index]} People born on these dates are said to embody genius qualities and can connect with any angel or elemental forces. ✨"
 
 elements_list = [physical_angel["element"], emotional_angel["element"], intellectual_angel["element"]]
 common_element = max(set(elements_list), key=elements_list.count)
