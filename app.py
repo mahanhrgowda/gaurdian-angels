@@ -108,25 +108,46 @@ angels = [
     {"number": 72, "name": "Mumiah", "zodiac": "Pisces", "element": "Water", "description": "Brings completion and success in endeavors. Brings undertakings to successful conclusion. Longevity and success in medicine.", "psalm": "116:7", "sigil_desc": "Features a six-pointed star with the divine name Mumi repeated three times—twice anti-clockwise around the outside of the star and once in the center, written from right to left. Also a pentagram with the Angel's name Mumiah formed by a single anti-clockwise ring of letters, including the suffix iah added to the Name of God. Includes a central pentagon space for desires, surrounded by patterns of light and dark texture for Empowered Angel Magick."}
 ]
 
-# Special days and elements
-special_days = [(5, 31), (8, 12), (10, 24), (1, 5), (3, 19)]
-special_elements = ["Aether (Wood)", "Fire", "Air (Metal)", "Water", "Earth"]
-special_archangels = ["Nathaniel", "Michael", "Raphael", "Gabriel", "Uriel"]
-special_seasons = ["Spring", "Summer", "Autumn", "Winter", "Late Summer"]
-special_symbolisms = [
-    "Represents new beginnings, growth, and higher vibrations. Tied to the gall-bladder and liver meridians; aids in expanding consciousness and understanding limitless potential. Imbalance may cause complaining.",
-    "Inspires divine love, heart-opening, and overcoming depression. Tied to the heart and small intestine meridians; promotes spreading light and recognizing soul duality. Imbalance may cause depression.",
-    "Focuses on healing, wisdom, and interconnectedness. Tied to the lung and large intestine meridians; assists in studies, music, medicine, and repairing disharmony. Imbalance may lead to downfall.",
-    "Encourages intuition, flexibility, and freedom from fears. Tied to the bladder and kidney meridians; brings fertility, wisdom, and spiritual information. Imbalance may result in fear control.",
-    "Promotes balance, peace, and guidance from doubt. Tied to the stomach and spleen meridians; radiates light to show life's path and encourage serenity. Imbalance may cause anxiety."
+# Archangels for special dates
+archangels_list = [
+    {"number": 73, "name": "Gabriel", "zodiac": None, "element": "Water", "description": "Encourages intuition, flexibility, and freedom from fears. Tied to the bladder and kidney meridians; brings fertility, wisdom, and spiritual information. Imbalance may result in fear control.", "psalm": None, "sigil_desc": "Sigil of Gabriel, with water symbols like a lily or moon, representing intuition and flexibility."},
+    {"number": 74, "name": "Nathaniel", "zodiac": None, "element": "Aether (Wood)", "description": "Represents new beginnings, growth, and higher vibrations. Tied to the gall-bladder and liver meridians; aids in expanding consciousness and understanding limitless potential. Imbalance may cause complaining.", "psalm": None, "sigil_desc": "Sigil of Nathaniel, often depicted with symbols of growth and new beginnings, such as a tree or rising sun."},
+    {"number": 75, "name": "Michael", "zodiac": None, "element": "Fire", "description": "Inspires divine love, heart-opening, and overcoming depression. Tied to the heart and small intestine meridians; promotes spreading light and recognizing soul duality. Imbalance may cause depression.", "psalm": None, "sigil_desc": "Sigil of Michael, typically including a sword and shield, symbolizing protection and divine love."},
+    {"number": 76, "name": "Uriel", "zodiac": None, "element": "Earth", "description": "Promotes balance, peace, and guidance from doubt. Tied to the stomach and spleen meridians; radiates light to show life's path and encourage serenity. Imbalance may cause anxiety.", "psalm": None, "sigil_desc": "Sigil of Uriel, incorporating earth symbols such as a lantern or mountain for guidance and balance."},
+    {"number": 77, "name": "Raphael", "zodiac": None, "element": "Air (Metal)", "description": "Focuses on healing, wisdom, and interconnectedness. Tied to the lung and large intestine meridians; assists in studies, music, medicine, and repairing disharmony. Imbalance may lead to downfall.", "psalm": None, "sigil_desc": "Sigil of Raphael, featuring healing symbols like a staff with serpent or wings for wisdom."},
 ]
+
+# Special days and elements
+special_days = [(1, 5), (3, 19), (5, 31), (8, 12), (10, 24)]
 
 # Element qualities
 element_qualities = {
     "Fire": "passion, energy, initiative",
     "Water": "emotional depth, intuition, nurturing",
     "Air": "intellect, communication, adaptability",
-    "Earth": "stability, practicality, sensuality"
+    "Earth": "stability, practicality, sensuality",
+    "Aether (Wood)": "growth, expansion, higher vibrations",
+    "Air (Metal)": "intellect, communication, adaptability"
+}
+
+# Element themes
+element_themes = {
+    "Fire": "dynamic, creative, and transformative energies 🔥",
+    "Water": "fluidity, empathy, subconscious wisdom, and emotional healing 💧",
+    "Air": "intellect, communication, and social harmony 💨",
+    "Earth": "stability, practicality, and material manifestation 🌍",
+    "Aether (Wood)": "new beginnings, growth, and higher vibrations 🌿",
+    "Air (Metal)": "healing, wisdom, and interconnectedness 💨"
+}
+
+# Element emojis
+element_emojis = {
+    "Fire": "🔥",
+    "Water": "💧",
+    "Air": "💨",
+    "Earth": "🌍",
+    "Aether (Wood)": "🌿",
+    "Air (Metal)": "💨"
 }
 
 # Element invocation details
@@ -154,14 +175,19 @@ element_invocations = {
         "imagery": "mountains or soil",
         "phases": "stable weather or new moons",
         "openness": "grounded openness"
+    },
+    "Aether (Wood)": {
+        "colors": "green or violet",
+        "imagery": "trees or wind",
+        "phases": "dawn or spring equinox",
+        "openness": "spiritual openness"
+    },
+    "Air (Metal)": {
+        "colors": "yellow or light blue",
+        "imagery": "wind or clouds",
+        "phases": "windy days or clear skies",
+        "openness": "mental openness"
     }
-}
-
-element_emojis = {
-    "Fire": "🔥",
-    "Water": "💧",
-    "Air": "💨",
-    "Earth": "🌍"
 }
 
 def get_angel(num):
@@ -254,30 +280,37 @@ physical_num = int(longitude // 5) + 1
 emotional_num = ((physical_num - 1 + 24) % 72) + 1
 intellectual_num = ((physical_num - 1 + 48) % 72) + 1
 
-physical_angel = get_angel(physical_num)
-emotional_angel = get_angel(emotional_num)
-intellectual_angel = get_angel(intellectual_num)
+is_special = (month, day) in special_days
 
-zodiac_sign = get_zodiac_sign(longitude)
-
-special_message = ""
-if (month, day) in special_days:
+if is_special:
     special_index = special_days.index((month, day))
-    special_message = f"\n\n{special_date_desc} {dt.strftime('%B %d')} is one of the special days linked to the five elements, totaling 77 angels including the 72 and 5 archangels. You are associated with Archangel {special_archangels[special_index]} of {special_elements[special_index]}, linked to {special_seasons[special_index]}. {special_symbolisms[special_index]} People born on these dates are said to embody genius qualities and can connect with any angel or elemental forces. ✨"
+    physical_angel = archangels_list[special_index]
+    emotional_angel = None
+    intellectual_angel = None
+    zodiac_sign = "Transitional"
+    special_message = ""
+else:
+    physical_angel = get_angel(physical_num)
+    emotional_angel = get_angel(emotional_num)
+    intellectual_angel = get_angel(intellectual_num)
+    zodiac_sign = get_zodiac_sign(longitude)
+    special_message = ""
 
-elements_list = [physical_angel["element"], emotional_angel["element"], intellectual_angel["element"]]
+if is_special:
+    elements_list = [physical_angel["element"]]
+else:
+    elements_list = [physical_angel["element"], emotional_angel["element"], intellectual_angel["element"]]
+
 common_element = max(set(elements_list), key=elements_list.count)
-element_themes = {
-    "Fire": "dynamic, creative, and transformative energies 🔥",
-    "Water": "fluidity, empathy, subconscious wisdom, and emotional healing 💧",
-    "Air": "intellect, communication, and social harmony 💨",
-    "Earth": "stability, practicality, and material manifestation 🌍",
-}
 
 sigil_text = ""
-for angel in [physical_angel, emotional_angel, intellectual_angel]:
-    if angel["sigil_desc"]:
-        sigil_text += f"{angel['name']}'s ({angel['sigil_desc']}), "
+if is_special:
+    if physical_angel["sigil_desc"]:
+        sigil_text = physical_angel["sigil_desc"]
+else:
+    for angel in [physical_angel, emotional_angel, intellectual_angel]:
+        if angel["sigil_desc"]:
+            sigil_text += f"{angel['name']}'s ({angel['sigil_desc']}), "
 
 sigil_text = sigil_text.rstrip(", ") or "traditional Kabbalistic sigils derived from the Rose Cross or Hebrew letters ✍️"
 
@@ -285,26 +318,41 @@ psalm_text = ""
 if physical_angel["psalm"]:
     psalm_text = f" (e.g., Psalm {physical_angel['psalm']} for {physical_angel['name']}, focusing on deliverance 📖)"
 
-inv = element_invocations[common_element]
+inv = element_invocations.get(common_element, element_invocations["Air"])  # default to Air if not found
 colors = inv["colors"]
 imagery = inv["imagery"]
 phases = inv["phases"]
 openness = inv["openness"]
 
-phys_qual = element_qualities[physical_angel["element"]] + " " + element_emojis[physical_angel["element"]]
-emot_qual = element_qualities[emotional_angel["element"]] + " " + element_emojis[emotional_angel["element"]]
-intell_qual = element_qualities[intellectual_angel["element"]] + " " + element_emojis[intellectual_angel["element"]]
+phys_qual = element_qualities.get(physical_angel["element"], "") + " " + element_emojis.get(physical_angel["element"], "")
+if emotional_angel:
+    emot_qual = element_qualities[emotional_angel["element"]] + " " + element_emojis[emotional_angel["element"]]
+else:
+    emot_qual = ""
+if intellectual_angel:
+    intell_qual = element_qualities[intellectual_angel["element"]] + " " + element_emojis[intellectual_angel["element"]]
+else:
+    intell_qual = ""
 
 # Sections
-sections = [
-    "Full Report 📄",
-    "Overview & Zodiac 🔭",
-    "Physical Angel 👼",
-    "Emotional Angel ❤️",
-    "Intellectual Angel 🧠",
-    "Common Element & Themes 🌈",
-    "Invocation Practices 🕯️"
-]
+if is_special:
+    sections = [
+        "Full Report 📄",
+        "Overview & Zodiac 🔭",
+        "Guardian Archangel 👼",
+        "Common Element & Themes 🌈",
+        "Invocation Practices 🕯️"
+    ]
+else:
+    sections = [
+        "Full Report 📄",
+        "Overview & Zodiac 🔭",
+        "Physical Angel 👼",
+        "Emotional Angel ❤️",
+        "Intellectual Angel 🧠",
+        "Common Element & Themes 🌈",
+        "Invocation Practices 🕯️"
+    ]
 
 selected_section = st.selectbox("Select Section to View 📘", sections)
 
@@ -313,50 +361,62 @@ overview_text = f"""
 For this personal application, based on {moment_desc}. This falls under the zodiac sign of {zodiac_sign} ♋.{special_message}
 """
 
-physical_text = f"""
+if is_special:
+    physical_text = f"""
+•  Guardian Archangel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']} 📜. Element: {physical_angel['element']} – {phys_qual}.
+Sigil: {physical_angel['sigil_desc']} ✒️
+"""
+    emotional_text = ""
+    intellectual_text = ""
+    common_element_text = f"""
+The guardian archangel is associated with the {common_element} element {element_emojis.get(common_element, "")}, emphasizing themes of {element_themes.get(common_element, "")} in your {makeup_desc}. This alignment suggests a natural affinity for intuitive reasoning, adaptive problem-solving, and connecting deeply with {affinity_desc}.
+"""
+    calculation_desc = "Since this is a special transitional date filling the calendar gaps (360/72 angels, but 365 days), the guardian is the archangel..."
+    yields_text = physical_text
+else:
+    physical_text = f"""
 •  Physical Angel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']} 📜. Zodiac: {physical_angel['zodiac']} ({physical_angel['element']} element – {phys_qual}).
 Sigil: {physical_angel['sigil_desc']} ✒️
 Psalm: Psalm {physical_angel['psalm']} 📖
 """
-
-emotional_text = f"""
+    emotional_text = f"""
 •  Emotional Angel ❤️: {emotional_angel['name']} (No. {emotional_angel['number']}) – {emotional_angel['description']} 📜. Zodiac: {emotional_angel['zodiac']} ({emotional_angel['element']} element – {emot_qual}).
 Sigil: {emotional_angel['sigil_desc']} ✒️
 Psalm: Psalm {emotional_angel['psalm']} 📖
 """
-
-intellectual_text = f"""
+    intellectual_text = f"""
 •  Intellectual Angel 🧠: {intellectual_angel['name']} (No. {intellectual_angel['number']}) – {intellectual_angel['description']} 📜. Zodiac: {intellectual_angel['zodiac']} ({intellectual_angel['element']} element – {intell_qual}).
 Sigil: {intellectual_angel['sigil_desc']} ✒️
 Psalm: Psalm {intellectual_angel['psalm']} 📖
 """
-
-common_element_text = f"""
+    common_element_text = f"""
 All three angels share the {common_element} element {element_emojis[common_element]}, emphasizing themes of {element_themes[common_element]} in your {makeup_desc}. This alignment suggests a natural affinity for intuitive reasoning, adaptive problem-solving, and connecting deeply with {affinity_desc}.
 """
+    calculation_desc = "To calculate the birth angels, we start with the physical (or incarnation/guardian) angel 👼, which corresponds to the exact position of the Sun ☀️ at birth within the standard Kabbalistic assignment of the 72 angels to the zodiac (each governing a 5-degree segment). Based on the precise time ⏳, it aligns with angel number {physical_num}: {physical_angel['name']} (also spelled variations like Yeiaiel or Yeiayel for some).\n\nFrom there, the emotional (or heart) angel ❤️ is determined by adding 24 to the physical angel’s number (representing a 120-degree trine aspect in the zodiac for harmonious emotional support). The intellectual (or intellect) angel 🧠 adds 48 (a 240-degree trine for mental alignment). If the result exceeds 72, subtract 72 to cycle back. This yields:"
+    yields_text = physical_text + "\n" + emotional_text + "\n" + intellectual_text
 
 invocation_text = f"""
-For invocation, align practices with {common_element}’s energies {element_emojis[common_element]}: use {colors} colors 🎨, {imagery} imagery (e.g., {imagery}), {phases}, and {openness}. Here’s how to engage each:
+For invocation, align practices with {common_element}’s energies {element_emojis.get(common_element, "")}: use {colors} colors 🎨, {imagery} imagery (e.g., {imagery}), {phases}, and {openness}. Here’s how to engage each:
 
-•  Meditation 🧘: Sit quietly near {imagery} or with a representation of it. Visualize a soft {colors} light enveloping you. For {physical_angel['name']}, focus on diplomatic resolutions in your life; for {emotional_angel['name']}, seek revelations on hidden questions; for {intellectual_angel['name']}, contemplate personal transformation. Chant or affirm the angel’s name (e.g., “{physical_angel['name']}, guide my words with clarity”) for 5–10 minutes daily.
+•  Meditation 🧘: Sit quietly near {imagery} or with a representation of it. Visualize a soft {colors} light enveloping you. For {physical_angel['name']}, focus on diplomatic resolutions in your life; { 'for ' + emotional_angel['name'] + ', seek revelations on hidden questions; ' if emotional_angel else '' }{ 'for ' + intellectual_angel['name'] + ', contemplate personal transformation. ' if intellectual_angel else '' }Chant or affirm the angel’s name (e.g., “{physical_angel['name']}, guide my words with clarity”) for 5–10 minutes daily.
 
 •  Sigils ✒️: Each angel has a traditional sigil derived from the Kabbalistic Rose Cross or Hebrew letters. Draw {sigil_text} on paper. Meditate on it while burning frankincense (for {common_element}’s mystical vibe) or placing it under moonlight 🌕.
 
-•  Rituals 🕯️: Create a simple altar with {imagery}, a chalice or symbol of {common_element}, and {physical_angel['zodiac']}/{emotional_angel['zodiac']}/{intellectual_angel['zodiac']} symbols. On {ritual_date} (or any {common_element}-ruled day like Monday), light a {colors} candle and recite a psalm associated with the angel{psalm_text}. Offer thanks for guidance, then journal insights 📓. Repeat seasonally to strengthen the connection, always with pure intent for balance and growth 🌱.
+•  Rituals 🕯️: Create a simple altar with {imagery}, a chalice or symbol of {common_element}, and {physical_angel['zodiac'] if physical_angel['zodiac'] else 'transitional symbols'}{ '/' + emotional_angel['zodiac'] if emotional_angel else '' }{ '/' + intellectual_angel['zodiac'] if intellectual_angel else '' } symbols. On {ritual_date} (or any {common_element}-ruled day like Monday), light a {colors} candle and recite a psalm associated with the angel{psalm_text}. Offer thanks for guidance, then journal insights 📓. Repeat seasonally to strengthen the connection, always with pure intent for balance and growth 🌱.
 """
 
-full_report = overview_text + "\n\nTo calculate the birth angels, we start with the physical (or incarnation/guardian) angel 👼, which corresponds to the exact position of the Sun ☀️ at birth within the standard Kabbalistic assignment of the 72 angels to the zodiac (each governing a 5-degree segment). Based on the precise time ⏳, it aligns with angel number {physical_num}: {physical_angel['name']} (also spelled variations like Yeiaiel or Yeiayel for some).\n\nFrom there, the emotional (or heart) angel ❤️ is determined by adding 24 to the physical angel’s number (representing a 120-degree trine aspect in the zodiac for harmonious emotional support). The intellectual (or intellect) angel 🧠 adds 48 (a 240-degree trine for mental alignment). If the result exceeds 72, subtract 72 to cycle back. This yields:\n\n" + physical_text + "\n" + emotional_text + "\n" + intellectual_text + "\n" + common_element_text + "\n" + invocation_text + "\n\nThis framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others."
+full_report = overview_text + "\n\n" + calculation_desc + "\n\n" + yields_text + "\n" + common_element_text + "\n" + invocation_text + "\n\nThis framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others."
 
 # Display selected section
 if selected_section == "Full Report 📄":
     st.markdown(full_report)
 elif selected_section == "Overview & Zodiac 🔭":
     st.markdown(overview_text)
-elif selected_section == "Physical Angel 👼":
+elif selected_section == "Physical Angel 👼" or selected_section == "Guardian Archangel 👼":
     st.markdown(physical_text)
-elif selected_section == "Emotional Angel ❤️":
+elif selected_section == "Emotional Angel ❤️" and not is_special:
     st.markdown(emotional_text)
-elif selected_section == "Intellectual Angel 🧠":
+elif selected_section == "Intellectual Angel 🧠" and not is_special:
     st.markdown(intellectual_text)
 elif selected_section == "Common Element & Themes 🌈":
     st.markdown(common_element_text)
