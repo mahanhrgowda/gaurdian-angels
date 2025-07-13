@@ -296,17 +296,20 @@ else:
     zodiac_sign = get_zodiac_sign(longitude)
     special_message = ""
 
-# Determine guardian archangel based on date
-guardian_archangel = None
-special_dates_sorted = sorted(special_days, key=lambda x: (x[0], x[1]))
-date_tuple = (month, day)
-for i, s_date in enumerate(special_dates_sorted):
-    if date_tuple > s_date:
-        guardian_archangel = archangels_list[i]
-    else:
-        break
-if not guardian_archangel:
-    guardian_archangel = archangels_list[-1]  # Wrap around if after last
+# Determine guardian archangel based on element
+element_to_arch = {
+    "Water": archangels_list[0],  # Gabriel
+    "Aether (Wood)": archangels_list[1],  # Nathaniel
+    "Fire": archangels_list[2],  # Michael
+    "Earth": archangels_list[3],  # Uriel
+    "Air": archangels_list[4],  # Raphael
+    "Air (Metal)": archangels_list[4]  # Raphael
+}
+
+if is_special:
+    guardian_archangel = physical_angel
+else:
+    guardian_archangel = element_to_arch.get(physical_angel["element"], archangels_list[1])  # Default to Nathaniel if not found
 
 if is_special:
     elements_list = [physical_angel["element"]]
