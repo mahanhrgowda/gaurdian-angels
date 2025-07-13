@@ -310,4 +310,4 @@ For invocation, align practices with {common_element}’s energies {element_emoj
 This framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others.
 """
 
-st.markdown(Mahaan)
+st.markdown(text)
