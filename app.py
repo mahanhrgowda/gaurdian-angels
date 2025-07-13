@@ -201,6 +201,8 @@ timezone = st.selectbox(
 )
 
 if mode == "Current Moment 🌟":
+    if st.button("Refresh 🔄"):
+        st.rerun()
     tz = ZoneInfo(timezone)
     dt = datetime.datetime.now(tz)
     date_str = dt.strftime('%B %d, %Y')
