@@ -89,7 +89,7 @@ angels = [
     {"number": 53, "name": "Nanael", "zodiac": "Sagittarius", "element": "Fire", "description": "Supports spiritual communication and meditation.", "psalm": None, "sigil_desc": None},
     {"number": 54, "name": "Nithael", "zodiac": "Sagittarius", "element": "Fire", "description": "Brings stability and longevity.", "psalm": None, "sigil_desc": None},
     {"number": 55, "name": "Mebahiah", "zodiac": "Capricorn", "element": "Earth", "description": "Enhances intellectual clarity and moral integrity.", "psalm": None, "sigil_desc": None},
-    {"number": 56, "name": "Poyel", "zodiac": "Capricorn", "element": "Earth", "description": "Supports fame, fortune, and modesty.", "psalm": None, "sigil_desc": None},
+    {"number": 56, "name": "Poyel", "zodiac": "Capricorn", "element": "Earth", "description": "Associated with modesty, moderation, a good sense of humor, and success achieved through talent and good conduct. Linked to fortune, fame, and the fulfillment of wishes. Influences individuals to be humble, optimistic, and guided towards divine success. Seen as the quiet force behind achieving goals, realizing dreams, and receiving answered prayers.", "psalm": None, "sigil_desc": None},
     {"number": 57, "name": "Nemamiah", "zodiac": "Capricorn", "element": "Earth", "description": "Aids in prosperity and military success.", "psalm": None, "sigil_desc": None},
     {"number": 58, "name": "Yeialel", "zodiac": "Capricorn", "element": "Earth", "description": "Heals mental ailments and promotes clarity.", "psalm": None, "sigil_desc": None},
     {"number": 59, "name": "Harahel", "zodiac": "Capricorn", "element": "Earth", "description": "Protects children and aids in financial matters.", "psalm": None, "sigil_desc": None},
