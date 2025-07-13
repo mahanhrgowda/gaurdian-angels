@@ -286,22 +286,47 @@ phys_qual = element_qualities[physical_angel["element"]] + " " + element_emojis[
 emot_qual = element_qualities[emotional_angel["element"]] + " " + element_emojis[emotional_angel["element"]]
 intell_qual = element_qualities[intellectual_angel["element"]] + " " + element_emojis[intellectual_angel["element"]]
 
-# Generate descriptive text
-text = f"""
+# Sections
+sections = [
+    "Full Report 📄",
+    "Overview & Zodiac 🔭",
+    "Physical Angel 👼",
+    "Emotional Angel ❤️",
+    "Intellectual Angel 🧠",
+    "Common Element & Themes 🌈",
+    "Invocation Practices 🕯️"
+]
+
+selected_section = st.selectbox("Select Section to View 📘", sections)
+
+# Generate content for each section
+overview_text = f"""
 For this personal application, based on {moment_desc}. This falls under the zodiac sign of {zodiac_sign} ♋.{special_message}
+"""
 
-To calculate the birth angels, we start with the physical (or incarnation/guardian) angel 👼, which corresponds to the exact position of the Sun ☀️ at birth within the standard Kabbalistic assignment of the 72 angels to the zodiac (each governing a 5-degree segment). Based on the precise time ⏳, it aligns with angel number {physical_angel['number']}: {physical_angel['name']} (also spelled variations like Yeiaiel or Yeiayel for some).
+physical_text = f"""
+•  Physical Angel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']} 📜. Zodiac: {physical_angel['zodiac']} ({physical_angel['element']} element – {phys_qual}).
+Sigil: {physical_angel['sigil_desc']} ✒️
+Psalm: Psalm {physical_angel['psalm']} 📖
+"""
 
-From there, the emotional (or heart) angel ❤️ is determined by adding 24 to the physical angel’s number (representing a 120-degree trine aspect in the zodiac for harmonious emotional support). The intellectual (or intellect) angel 🧠 adds 48 (a 240-degree trine for mental alignment). If the result exceeds 72, subtract 72 to cycle back. This yields:
+emotional_text = f"""
+•  Emotional Angel ❤️: {emotional_angel['name']} (No. {emotional_angel['number']}) – {emotional_angel['description']} 📜. Zodiac: {emotional_angel['zodiac']} ({emotional_angel['element']} element – {emot_qual}).
+Sigil: {emotional_angel['sigil_desc']} ✒️
+Psalm: Psalm {emotional_angel['psalm']} 📖
+"""
 
-•  Physical Angel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']}. Zodiac: {physical_angel['zodiac']} ({physical_angel['element']} element – {phys_qual}).
+intellectual_text = f"""
+•  Intellectual Angel 🧠: {intellectual_angel['name']} (No. {intellectual_angel['number']}) – {intellectual_angel['description']} 📜. Zodiac: {intellectual_angel['zodiac']} ({intellectual_angel['element']} element – {intell_qual}).
+Sigil: {intellectual_angel['sigil_desc']} ✒️
+Psalm: Psalm {intellectual_angel['psalm']} 📖
+"""
 
-•  Emotional Angel ❤️: {emotional_angel['name']} (No. {emotional_angel['number']}) – {emotional_angel['description']}. Zodiac: {emotional_angel['zodiac']} ({emotional_angel['element']} element – {emot_qual}).
-
-•  Intellectual Angel 🧠: {intellectual_angel['name']} (No. {intellectual_angel['number']}) – {intellectual_angel['description']}. Zodiac: {intellectual_angel['zodiac']} ({intellectual_angel['element']} element – {intell_qual}).
-
+common_element_text = f"""
 All three angels share the {common_element} element {element_emojis[common_element]}, emphasizing themes of {element_themes[common_element]} in your {makeup_desc}. This alignment suggests a natural affinity for intuitive reasoning, adaptive problem-solving, and connecting deeply with {affinity_desc}.
+"""
 
+invocation_text = f"""
 For invocation, align practices with {common_element}’s energies {element_emojis[common_element]}: use {colors} colors 🎨, {imagery} imagery (e.g., {imagery}), {phases}, and {openness}. Here’s how to engage each:
 
 •  Meditation 🧘: Sit quietly near {imagery} or with a representation of it. Visualize a soft {colors} light enveloping you. For {physical_angel['name']}, focus on diplomatic resolutions in your life; for {emotional_angel['name']}, seek revelations on hidden questions; for {intellectual_angel['name']}, contemplate personal transformation. Chant or affirm the angel’s name (e.g., “{physical_angel['name']}, guide my words with clarity”) for 5–10 minutes daily.
@@ -309,8 +334,22 @@ For invocation, align practices with {common_element}’s energies {element_emoj
 •  Sigils ✒️: Each angel has a traditional sigil derived from the Kabbalistic Rose Cross or Hebrew letters. Draw {sigil_text} on paper. Meditate on it while burning frankincense (for {common_element}’s mystical vibe) or placing it under moonlight 🌕.
 
 •  Rituals 🕯️: Create a simple altar with {imagery}, a chalice or symbol of {common_element}, and {physical_angel['zodiac']}/{emotional_angel['zodiac']}/{intellectual_angel['zodiac']} symbols. On {ritual_date} (or any {common_element}-ruled day like Monday), light a {colors} candle and recite a psalm associated with the angel{psalm_text}. Offer thanks for guidance, then journal insights 📓. Repeat seasonally to strengthen the connection, always with pure intent for balance and growth 🌱.
-
-This framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others.
 """
 
-st.markdown(text)
+full_report = overview_text + "\n\nTo calculate the birth angels, we start with the physical (or incarnation/guardian) angel 👼, which corresponds to the exact position of the Sun ☀️ at birth within the standard Kabbalistic assignment of the 72 angels to the zodiac (each governing a 5-degree segment). Based on the precise time ⏳, it aligns with angel number {physical_num}: {physical_angel['name']} (also spelled variations like Yeiaiel or Yeiayel for some).\n\nFrom there, the emotional (or heart) angel ❤️ is determined by adding 24 to the physical angel’s number (representing a 120-degree trine aspect in the zodiac for harmonious emotional support). The intellectual (or intellect) angel 🧠 adds 48 (a 240-degree trine for mental alignment). If the result exceeds 72, subtract 72 to cycle back. This yields:\n\n" + physical_text + "\n" + emotional_text + "\n" + intellectual_text + "\n" + common_element_text + "\n" + invocation_text + "\n\nThis framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others."
+
+# Display selected section
+if selected_section == "Full Report 📄":
+    st.markdown(full_report)
+elif selected_section == "Overview & Zodiac 🔭":
+    st.markdown(overview_text)
+elif selected_section == "Physical Angel 👼":
+    st.markdown(physical_text)
+elif selected_section == "Emotional Angel ❤️":
+    st.markdown(emotional_text)
+elif selected_section == "Intellectual Angel 🧠":
+    st.markdown(intellectual_text)
+elif selected_section == "Common Element & Themes 🌈":
+    st.markdown(common_element_text)
+elif selected_section == "Invocation Practices 🕯️":
+    st.markdown(invocation_text)
