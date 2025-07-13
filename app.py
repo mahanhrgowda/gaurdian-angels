@@ -110,11 +110,11 @@ angels = [
 
 # Archangels for special dates
 archangels_list = [
-    {"number": 73, "name": "Gabriel", "zodiac": None, "element": "Water", "description": "Encourages intuition, flexibility, and freedom from fears. Tied to the bladder and kidney meridians; brings fertility, wisdom, and spiritual information. Imbalance may result in fear control.", "psalm": None, "sigil_desc": "Sigil of Gabriel, with water symbols like a lily or moon, representing intuition and flexibility."},
-    {"number": 74, "name": "Nathaniel", "zodiac": None, "element": "Aether (Wood)", "description": "Represents new beginnings, growth, and higher vibrations. Tied to the gall-bladder and liver meridians; aids in expanding consciousness and understanding limitless potential. Imbalance may cause complaining.", "psalm": None, "sigil_desc": "Sigil of Nathaniel, often depicted with symbols of growth and new beginnings, such as a tree or rising sun."},
-    {"number": 75, "name": "Michael", "zodiac": None, "element": "Fire", "description": "Inspires divine love, heart-opening, and overcoming depression. Tied to the heart and small intestine meridians; promotes spreading light and recognizing soul duality. Imbalance may cause depression.", "psalm": None, "sigil_desc": "Sigil of Michael, typically including a sword and shield, symbolizing protection and divine love."},
-    {"number": 76, "name": "Uriel", "zodiac": None, "element": "Earth", "description": "Promotes balance, peace, and guidance from doubt. Tied to the stomach and spleen meridians; radiates light to show life's path and encourage serenity. Imbalance may cause anxiety.", "psalm": None, "sigil_desc": "Sigil of Uriel, incorporating earth symbols such as a lantern or mountain for guidance and balance."},
-    {"number": 77, "name": "Raphael", "zodiac": None, "element": "Air (Metal)", "description": "Focuses on healing, wisdom, and interconnectedness. Tied to the lung and large intestine meridians; assists in studies, music, medicine, and repairing disharmony. Imbalance may lead to downfall.", "psalm": None, "sigil_desc": "Sigil of Raphael, featuring healing symbols like a staff with serpent or wings for wisdom."},
+    {"number": 73, "name": "Gabriel", "zodiac": "Transitional - Water signs (Cancer, Scorpio, Pisces)", "element": "Water", "description": "Encourages intuition, flexibility, and freedom from fears. Tied to the bladder and kidney meridians; brings fertility, wisdom, and spiritual information. Imbalance may result in fear control. Leader angel for Water element angels.", "psalm": "91:11", "sigil_desc": "Often depicted with a lily or moon, representing intuition and flexibility; a complex symbol with Hebrew letters for invocation of divinity and intuition."},
+    {"number": 74, "name": "Nathaniel", "zodiac": "Transitional - Aether/Wood related signs", "element": "Aether (Wood)", "description": "Represents new beginnings, growth, and higher vibrations. Tied to the gall-bladder and liver meridians; aids in expanding consciousness and understanding limitless potential. Imbalance may cause complaining. Leader angel for Aether element angels.", "psalm": "145:1-2", "sigil_desc": "Depicted with symbols of growth like a tree or rising sun, representing new beginnings and fire energy."},
+    {"number": 75, "name": "Michael", "zodiac": "Transitional - Fire signs (Aries, Leo, Sagittarius)", "element": "Fire", "description": "Inspires divine love, heart-opening, and overcoming depression. Tied to the heart and small intestine meridians; promotes spreading light and recognizing soul duality. Imbalance may cause depression. Leader angel for Fire element angels.", "psalm": "91:11", "sigil_desc": "Composed of seven distinct parts in a circle with a cross, Hebrew letters, often including a sword and shield for protection and strength."},
+    {"number": 76, "name": "Uriel", "zodiac": "Transitional - Earth signs (Taurus, Virgo, Capricorn)", "element": "Earth", "description": "Promotes balance, peace, and guidance from doubt. Tied to the stomach and spleen meridians; radiates light to show life's path and encourage serenity. Imbalance may cause anxiety. Leader angel for Earth element angels.", "psalm": "91:11", "sigil_desc": "Featuring a lantern or mountain, symbolizing guidance, wisdom, enlightenment, and protection; green and gold circular seal with symbols."},
+    {"number": 77, "name": "Raphael", "zodiac": "Transitional - Air signs (Gemini, Libra, Aquarius)", "element": "Air (Metal)", "description": "Focuses on healing, wisdom, and interconnectedness. Tied to the lung and large intestine meridians; assists in studies, music, medicine, and repairing disharmony. Imbalance may lead to downfall. Leader angel for Air element angels.", "psalm": "29:1", "sigil_desc": "Featuring healing symbols like a staff with serpent or wings, for knowledge, wisdom, healing, and protective powers."},
 ]
 
 # Special days and elements
@@ -127,7 +127,7 @@ element_qualities = {
     "Air": "intellect, communication, adaptability",
     "Earth": "stability, practicality, sensuality",
     "Aether (Wood)": "growth, expansion, higher vibrations",
-    "Air (Metal)": "intellect, communication, adaptability"
+    "Air (Metal)": "healing, wisdom, interconnectedness"
 }
 
 # Element themes
@@ -296,6 +296,18 @@ else:
     zodiac_sign = get_zodiac_sign(longitude)
     special_message = ""
 
+# Determine guardian archangel based on date
+guardian_archangel = None
+special_dates_sorted = sorted(special_days, key=lambda x: (x[0], x[1]))
+date_tuple = (month, day)
+for i, s_date in enumerate(special_dates_sorted):
+    if date_tuple > s_date:
+        guardian_archangel = archangels_list[i]
+    else:
+        break
+if not guardian_archangel:
+    guardian_archangel = archangels_list[-1]  # Wrap around if after last
+
 if is_special:
     elements_list = [physical_angel["element"]]
 else:
@@ -341,7 +353,9 @@ if is_special:
         "Overview & Zodiac 🔭",
         "Guardian Archangel 👼",
         "Common Element & Themes 🌈",
-        "Invocation Practices 🕯️"
+        "Invocation Practices 🕯️",
+        "Archangels 👼",
+        "Guardian Archangel for Date 👼"
     ]
 else:
     sections = [
@@ -351,7 +365,9 @@ else:
         "Emotional Angel ❤️",
         "Intellectual Angel 🧠",
         "Common Element & Themes 🌈",
-        "Invocation Practices 🕯️"
+        "Invocation Practices 🕯️",
+        "Archangels 👼",
+        "Guardian Archangel for Date 👼"
     ]
 
 selected_section = st.selectbox("Select Section to View 📘", sections)
@@ -363,8 +379,9 @@ For this personal application, based on {moment_desc}. This falls under the zodi
 
 if is_special:
     physical_text = f"""
-•  Guardian Archangel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']} 📜. Element: {physical_angel['element']} – {phys_qual}.
+•  Guardian Archangel 👼: {physical_angel['name']} (No. {physical_angel['number']}) – {physical_angel['description']} 📜. Zodiac: {physical_angel['zodiac']} Element: {physical_angel['element']} – {phys_qual}.
 Sigil: {physical_angel['sigil_desc']} ✒️
+Psalm: {physical_angel['psalm'] if physical_angel['psalm'] else 'None'} 📖
 """
     emotional_text = ""
     intellectual_text = ""
@@ -407,6 +424,20 @@ For invocation, align practices with {common_element}’s energies {element_emoj
 
 full_report = overview_text + "\n\n" + calculation_desc + "\n\n" + yields_text + "\n" + common_element_text + "\n" + invocation_text + "\n\nThis framework can be adapted for any moment—simply compute the Sun's position for the physical angel, then apply the +24/+48 formula for the others."
 
+archangels_text = ""
+for arch in archangels_list:
+    archangels_text += f"""
+• Archangel {arch['name']} (No. {arch['number']}) – {arch['description']} 📜. Zodiac: {arch['zodiac']} Element: {arch['element']}.
+Sigil: {arch['sigil_desc']} ✒️
+Psalm: {arch['psalm'] if arch['psalm'] else 'None'} 📖
+"""
+
+guardian_archangel_text = f"""
+• Guardian Archangel for this date 👼: {guardian_archangel['name']} (No. {guardian_archangel['number']}) – {guardian_archangel['description']} 📜. Zodiac: {guardian_archangel['zodiac']} Element: {guardian_archangel['element']}.
+Sigil: {guardian_archangel['sigil_desc']} ✒️
+Psalm: {guardian_archangel['psalm'] if guardian_archangel['psalm'] else 'None'} 📖
+"""
+
 # Display selected section
 if selected_section == "Full Report 📄":
     st.markdown(full_report)
@@ -422,3 +453,7 @@ elif selected_section == "Common Element & Themes 🌈":
     st.markdown(common_element_text)
 elif selected_section == "Invocation Practices 🕯️":
     st.markdown(invocation_text)
+elif selected_section == "Archangels 👼":
+    st.markdown(archangels_text)
+elif selected_section == "Guardian Archangel for Date 👼":
+    st.markdown(guardian_archangel_text)
